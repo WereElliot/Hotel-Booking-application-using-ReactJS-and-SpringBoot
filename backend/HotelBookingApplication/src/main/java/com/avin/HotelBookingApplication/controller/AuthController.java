@@ -2,6 +2,7 @@ package com.avin.HotelBookingApplication.controller;
 
 
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -28,11 +29,18 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/auth")
-@RequiredArgsConstructor
 public class AuthController {
     private final IUserService userService;
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
+
+    public AuthController(IUserService userService, AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
+        this.userService = userService;
+        this.authenticationManager = authenticationManager;
+        this.jwtUtils = jwtUtils;
+    }
+
+
 
     @PostMapping("/register-user")
     public ResponseEntity<?> registerUser(@RequestBody User user) {

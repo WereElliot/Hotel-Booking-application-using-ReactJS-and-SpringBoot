@@ -21,6 +21,11 @@ public class RoleService implements IRoleService {
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
 
+    public RoleService(RoleRepository roleRepository, UserRepository userRepository) {
+        this.roleRepository = roleRepository;
+        this.userRepository = userRepository;
+    }
+
     @Override
     public List<Role> getRoles() {
         return roleRepository.findAll();

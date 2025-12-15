@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
+
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,8 +24,15 @@ public class Role {
     @ManyToMany(mappedBy = "roles")
     private Collection<User> users = new HashSet<>();
 
+    public Role() {
+    }
+
     public Role(String name) {
         this.name = name;
+    }
+
+    public Collection<User> getUsers() {
+        return users;
     }
 
     public void assignRoleToUser(User user){

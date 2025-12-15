@@ -21,13 +21,15 @@ const Login = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
-		const success = await loginUser(login)
-		if (success) {
-			const token = success.token
-			auth.handleLogin(token)
-			navigate(redirectUrl, { replace: true })
-		} else {
-			setErrorMessage("Invalid username or password. Please try again.")
+		try {
+			const success = await loginUser(login)
+			if (success) {
+				const token = success.token
+				auth.handleLogin(token)
+				navigate(redirectUrl, { replace: true })
+			}
+		} catch (error) {
+			setErrorMessage(error.message)
 		}
 		setTimeout(() => {
 			setErrorMessage("")

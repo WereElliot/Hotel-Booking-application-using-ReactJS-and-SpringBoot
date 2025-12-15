@@ -18,6 +18,10 @@ public class RoomResponse {
     private String photo;
     private List<BookingResponse>bookings;
 
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
     public RoomResponse(Long id, String roomType, BigDecimal roomPrice) {
         this.id = id;
         this.roomType = roomType;

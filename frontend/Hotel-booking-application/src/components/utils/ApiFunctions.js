@@ -1,7 +1,7 @@
 import axios from "axios"
 
 export const api = axios.create({
-	baseURL: "http://localhost:8080"
+	baseURL: "http://localhost:8081"
 })
 
 export const getHeader = () => {
@@ -84,7 +84,9 @@ export async function getRoomById(roomId) {
 /* This function saves a new booking to the databse */
 export async function bookRoom(roomId, booking) {
 	try {
-		const response = await api.post(`/bookings/room/${roomId}/booking`, booking)
+		const response = await api.post(`/bookings/room/${roomId}/booking`, booking, {
+			headers: getHeader()
+		})
 		return response.data
 	} catch (error) {
 		if (error.response && error.response.data) {
@@ -110,7 +112,9 @@ export async function getAllBookings() {
 /* This function get booking by the cnfirmation code */
 export async function getBookingByConfirmationCode(confirmationCode) {
 	try {
-		const result = await api.get(`/bookings/confirmation/${confirmationCode}`)
+		const result = await api.get(`/bookings/confirmation/${confirmationCode}`, {
+			headers: getHeader()
+		})
 		return result.data
 	} catch (error) {
 		if (error.response && error.response.data) {
@@ -124,7 +128,9 @@ export async function getBookingByConfirmationCode(confirmationCode) {
 /* This is the function to cancel user booking */
 export async function cancelBooking(bookingId) {
 	try {
-		const result = await api.delete(`/bookings/booking/${bookingId}/delete`)
+		const result = await api.delete(`/bookings/booking/${bookingId}/delete`, {
+			headers: getHeader()
+		})
 		return result.data
 	} catch (error) {
 		throw new Error(`Error cancelling booking :${error.message}`)
@@ -146,8 +152,12 @@ export async function registerUser(registration) {
 		const response = await api.post("/auth/register-user", registration)
 		return response.data
 	} catch (error) {
-		if (error.reeponse && error.response.data) {
-			throw new Error(error.response.data)
+		if (error.response && error.response.data) {
+			if (typeof error.response.data === 'object' && error.response.data.message) {
+				throw new Error(error.response.data.message)
+			} else {
+				throw new Error(error.response.data)
+			}
 		} else {
 			throw new Error(`User registration error : ${error.message}`)
 		}
@@ -164,8 +174,11 @@ export async function loginUser(login) {
 			return null
 		}
 	} catch (error) {
-		console.error(error)
-		return null
+		if (error.response && error.response.data) {
+			throw new Error(error.response.data.message)
+		} else {
+			throw new Error(`Login error : ${error.message}`)
+		}
 	}
 }
 

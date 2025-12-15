@@ -47,6 +47,46 @@ public class BookedRoom {
     @JoinColumn(name = "room_id")
     private Room room;
 
+    public Long getBookingId() {
+        return bookingId;
+    }
+
+    public LocalDate getCheckInDate() {
+        return checkInDate;
+    }
+
+    public LocalDate getCheckOutDate() {
+        return checkOutDate;
+    }
+
+    public String getGuestFullName() {
+        return guestFullName;
+    }
+
+    public String getGuestEmail() {
+        return guestEmail;
+    }
+
+    public int getNumOfAdults() {
+        return NumOfAdults;
+    }
+
+    public int getNumOfChildren() {
+        return NumOfChildren;
+    }
+
+    public int getTotalNumOfGuest() {
+        return totalNumOfGuest;
+    }
+
+    public String getBookingConfirmationCode() {
+        return bookingConfirmationCode;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
     public void calculateTotalNumberOfGuest(){
         this.totalNumOfGuest = this.NumOfAdults + NumOfChildren;
     }
@@ -63,5 +103,9 @@ public class BookedRoom {
 
     public void setBookingConfirmationCode(String bookingConfirmationCode) {
         this.bookingConfirmationCode = bookingConfirmationCode;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
     }
 }

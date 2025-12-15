@@ -23,6 +23,10 @@ import static org.springframework.http.HttpStatus.FOUND;
 public class RoleController {
     private final IRoleService roleService;
 
+    public RoleController(IRoleService roleService) {
+        this.roleService = roleService;
+    }
+
     @GetMapping("/all-roles")
     public ResponseEntity<List<Role>> getAllRoles() {
         return new ResponseEntity<>(roleService.getRoles(), FOUND);

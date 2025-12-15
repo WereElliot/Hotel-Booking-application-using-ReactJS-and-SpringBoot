@@ -17,13 +17,18 @@ import java.util.stream.Collectors;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
+
 public class HotelUserDetails implements UserDetails {
     private Long id;
     private  String email;
     private String password;
     private Collection<GrantedAuthority> authorities;
+    public HotelUserDetails(Long id, String email, String password, Collection<GrantedAuthority> authorities) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.authorities = authorities;
+    }
 
     public static HotelUserDetails buildUserDetails(User user){
         List<GrantedAuthority> authorities = user.getRoles()
@@ -39,6 +44,15 @@ public class HotelUserDetails implements UserDetails {
     }
 
 
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

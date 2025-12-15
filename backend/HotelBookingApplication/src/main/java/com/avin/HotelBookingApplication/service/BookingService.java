@@ -21,6 +21,11 @@ public class BookingService implements IBookingService {
     private final IRoomService roomService;
 
 
+    public BookingService(BookingRepository bookingRepository, IRoomService roomService) {
+        this.bookingRepository = bookingRepository;
+        this.roomService = roomService;
+    }
+
     @Override
     public List<BookedRoom> getAllBookings() {
         return bookingRepository.findAll();

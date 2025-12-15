@@ -12,9 +12,13 @@ import com.avin.HotelBookingApplication.repository.UserRepository;
 
 
 @Service
-@RequiredArgsConstructor
+
 public class HotelUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
+
+    public HotelUserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

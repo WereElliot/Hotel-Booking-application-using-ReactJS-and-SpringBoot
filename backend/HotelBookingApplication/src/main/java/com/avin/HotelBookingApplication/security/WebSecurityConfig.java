@@ -28,16 +28,18 @@ import com.avin.HotelBookingApplication.security.user.HotelUserDetailsService;
 
 
 @Configuration
-@RequiredArgsConstructor
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
 public class WebSecurityConfig {
     private final HotelUserDetailsService userDetailsService;
     private final JwtAuthEntryPoint jwtAuthEntryPoint;
+    private final AuthTokenFilter authTokenFilter;
 
-    @Bean
-    public AuthTokenFilter authenticationTokenFilter(){
-        return new AuthTokenFilter();
+    public WebSecurityConfig(HotelUserDetailsService userDetailsService, JwtAuthEntryPoint jwtAuthEntryPoint, AuthTokenFilter authTokenFilter) {
+        this.userDetailsService = userDetailsService;
+        this.jwtAuthEntryPoint = jwtAuthEntryPoint;
+        this.authTokenFilter = authTokenFilter;
     }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -67,7 +69,7 @@ public class WebSecurityConfig {
                         .permitAll().requestMatchers("/roles/**").hasRole("ADMIN")
                         .anyRequest().authenticated());
         http.authenticationProvider(authenticationProvider());
-        http.addFilterBefore(authenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
@@ -76,9 +78,4 @@ public class WebSecurityConfig {
     //     CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
     //     return multipartResolver;
     // }
-
-
-
-
-
 }

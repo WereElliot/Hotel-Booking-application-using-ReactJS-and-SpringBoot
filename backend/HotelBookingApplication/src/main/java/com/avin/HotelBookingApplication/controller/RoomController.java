@@ -37,8 +37,13 @@ public class RoomController {
     private final IRoomService roomService;
     private final BookingService bookingService;
 
+    public RoomController(IRoomService roomService, BookingService bookingService) {
+        this.roomService = roomService;
+        this.bookingService = bookingService;
+    }
+
     @PostMapping("/add/new-room")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<RoomResponse> addNewRoom(
             @RequestParam("photo") MultipartFile photo,
             @RequestParam("roomType") String roomType,
@@ -60,25 +65,25 @@ public class RoomController {
         List<RoomResponse> roomResponses = new ArrayList<>();
         for (Room room : rooms) {
             byte[] photoBytes = roomService.getRoomPhotoByRoomId(room.getId());
+            RoomResponse roomResponse = getRoomResponse(room);
             if (photoBytes != null && photoBytes.length > 0) {
                 String base64Photo = Base64.encodeBase64String(photoBytes);
-                RoomResponse roomResponse = getRoomResponse(room);
                 roomResponse.setPhoto(base64Photo);
-                roomResponses.add(roomResponse);
             }
+            roomResponses.add(roomResponse);
         }
         return ResponseEntity.ok(roomResponses);
     }
 
     @DeleteMapping("/delete/room/{roomId}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteRoom(@PathVariable Long roomId) {
         roomService.deleteRoom(roomId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping("/update/{roomId}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<RoomResponse> updateRoom(@PathVariable Long roomId,
             @RequestParam(required = false) String roomType,
             @RequestParam(required = false) BigDecimal roomPrice,
@@ -128,9 +133,18 @@ public class RoomController {
         List<BookedRoom> bookings = getAllBookingsByRoomId(room.getId());
         List<BookingResponse> bookingInfo = bookings
                 .stream()
-                .map(booking -> new BookingResponse(booking.getBookingId(),
+                .map(booking -> new BookingResponse(
+                        booking.getBookingId(),
                         booking.getCheckInDate(),
-                        booking.getCheckOutDate(), booking.getBookingConfirmationCode()))
+                        booking.getCheckOutDate(),
+                        booking.getGuestFullName(),
+                        booking.getGuestEmail(),
+                        booking.getNumOfAdults(),
+                        booking.getNumOfChildren(),
+                        booking.getTotalNumOfGuest(),
+                        booking.getBookingConfirmationCode(),
+                        null 
+                ))
                 .toList();
         byte[] photoBytes = null;
         Blob photoBlob = room.getPhoto();

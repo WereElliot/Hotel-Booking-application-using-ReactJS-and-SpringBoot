@@ -28,8 +28,13 @@ public class BookingController {
     private final IBookingService bookingService;
     private final IRoomService roomService;
 
+    public BookingController(IBookingService bookingService, IRoomService roomService) {
+        this.bookingService = bookingService;
+        this.roomService = roomService;
+    }
+
     @GetMapping("/all-bookings")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<BookingResponse>> getAllBookings() {
         List<BookedRoom> bookings = bookingService.getAllBookings();
         List<BookingResponse> bookingResponses = new ArrayList<>();

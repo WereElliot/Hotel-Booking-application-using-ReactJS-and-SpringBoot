@@ -26,7 +26,7 @@ const Registration = () => {
 			setRegistration({ firstName: "", lastName: "", email: "", password: "" })
 		} catch (error) {
 			setSuccessMessage("")
-			setErrorMessage(`Registration error : ${error.message}`)
+			setErrorMessage(error.message)
 		}
 		setTimeout(() => {
 			setErrorMessage("")

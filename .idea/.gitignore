@@ -1,10 +1,42 @@
 # Default ignored files
-/shelf/
 /workspace.xml
-# Ignored default folder with query files
-/queries/
-# Datasource local storage ignored files
+/tasks.xml
+/shelf/
+/gradle.xml
+/deployment.xml
+/libraries/
+
+# User-specific stuff
 /dataSources/
+/dataSources.ids/
 /dataSources.local.xml
-# Editor-based HTTP Client requests
-/httpRequests/
+/sqlDataSources.xml
+/dynamic.xml
+/uiDesigner.xml
+/dbnavigator.xml
+
+# Sensitive or high-churn files
+/usage.statistics.xml
+/android/
+/sonarlint/
+/find/
+/find.xml
+/profiles_settings.xml
+/fileColors.xml
+/codeInsightSettings.xml
+
+# Misc
+/prettier.xml
+/watcher.xml
+/vcs.xml
+/usage.statistics.xml
+/jsLinters/
+/externalDependencies.xml
+/php.xml
+/dictionaries/
+/project.iml
+/modules.xml
+/pyproject.xml
+/misc.xml
+/encodings.xml
+/compiler.xml

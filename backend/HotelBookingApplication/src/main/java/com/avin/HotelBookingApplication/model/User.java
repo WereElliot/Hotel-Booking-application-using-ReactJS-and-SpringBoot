@@ -31,5 +31,35 @@ public class User {
     private Collection<Role> roles = new HashSet<>();
 
 
+    public Long getId() {
+        return id;
+    }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
+    }
+
+    public Collection<Role> getRoles() {
+        return roles;
+    }
 }
